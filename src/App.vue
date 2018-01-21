@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div class="ui vertical segment">
+
+      <div class="ui container">
+        <router-view/>
+      </div>
+    </div>
   </div>
 </template>
 
