@@ -6,5 +6,5 @@ export default {
   },
   getGroups() {
     return getJson('/api/tradfri/groups');
-  }
-}
+  },
+};

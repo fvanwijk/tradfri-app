@@ -1,8 +1,21 @@
 <template>
   <div>
-    <h1>{{msg}}</h1>
-    <div class="ui unordered list">
-      <div class="item" v-for="item in items" :key="item.instanceId">{{item.name}}</div>
+    <h1>Trådfri App</h1>
+
+    <div class="ui items">
+      <div class="item" v-for="group in groups" v-bind:key="group.instanceId">
+        <div class="content">
+          <div class="header">{{group.name}}</div>
+          <div class="ui unordered list">
+            <div
+              class="item"
+              v-for="device in group.devices"
+              v-bind:key="device.instanceId">
+                {{device.name}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -14,12 +27,17 @@ export default {
   name: 'Home',
   data() {
     return {
-      msg: 'Trådfri App',
-      items: [],
+      groups: [],
     };
   },
   async mounted() {
-    this.items = (await TradfriService.getDevices()).items;
+    const devices = (await TradfriService.getDevices()).items;
+
+    this.groups = (await TradfriService.getGroups()).items.map(group => ({
+      ...group,
+      devices: group.deviceIDs.map(deviceID =>
+        devices.find(device => deviceID === device.instanceId)),
+    }));
   },
 };
 </script>
