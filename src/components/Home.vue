@@ -8,10 +8,16 @@
           <div class="header">{{group.name}}</div>
           <div class="ui unordered list">
             <div
-              class="item"
-              v-for="device in group.devices"
-              v-bind:key="device.instanceId">
+                class="item"
+                v-for="device in group.devices"
+                v-bind:key="device.instanceId">
+              <div class="ui toggle checkbox" v-if="device.type === 1 || device.type === 2">
+                <input :name="device.instanceId" type="checkbox">
+                <label>{{device.name}} ({{device.instanceId}})</label>
+              </div>
+              <span v-if="device.type !== 1 && device.type !== 2">
                 {{device.name}} ({{device.instanceId}})
+              </span>
             </div>
           </div>
         </div>

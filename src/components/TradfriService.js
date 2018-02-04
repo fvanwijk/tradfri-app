@@ -1,7 +1,7 @@
 const getJson = path => fetch(path).then(res => res.json());
 const putJson = (path, payload) => fetch(path, {
   method: 'PUT',
-  body: JSON.stringify(payload)
+  body: JSON.stringify(payload),
 }).then(res => res.json());
 
 export default {
