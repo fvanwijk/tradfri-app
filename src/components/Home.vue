@@ -11,11 +11,14 @@
                 class="item"
                 v-for="device in group.devices"
                 v-bind:key="device.instanceId">
-              <div class="ui toggle checkbox" v-if="device.type === 1 || device.type === 2">
-                <input :name="device.instanceId" type="checkbox">
+              <div class="ui toggle checkbox" v-if="device.type === 2">
+                <input
+                  :name="device.instanceId"
+                  v-model="device.lightList[0].onOff"
+                  type="checkbox">
                 <label>{{device.name}} ({{device.instanceId}})</label>
               </div>
-              <span v-if="device.type !== 1 && device.type !== 2">
+              <span v-if="device.type !== 2">
                 {{device.name}} ({{device.instanceId}})
               </span>
             </div>
