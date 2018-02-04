@@ -11,7 +11,7 @@
               class="item"
               v-for="device in group.devices"
               v-bind:key="device.instanceId">
-                {{device.name}}
+                {{device.name}} ({{device.instanceId}})
             </div>
           </div>
         </div>
