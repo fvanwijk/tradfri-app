@@ -1,9 +1,9 @@
 const tradfri = require('../tradfri');
-const groups = [];
+const groups = {};
 
 tradfri
   .on('group updated', async group => {
-    groups.push(group);
+    groups[group.instanceId] = group;
     //console.log(`Added group ${group.name} (${group.instanceId})`);
   })
   .on('error', e => {
@@ -14,10 +14,7 @@ tradfri
 module.exports = {
   getAll(req, res) {
     res.json({
-      items: groups.map(group => {
-        delete group.client;
-        return group;
-      }),
+      items: Object.values(groups).map(({ client, ...group }) => group),
       status: 'ok'
     });
   }
