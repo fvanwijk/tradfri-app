@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import TradfriService from './TradfriService';
+
 export default {
   name: 'Home',
   data() {
@@ -16,10 +18,8 @@ export default {
       items: [],
     };
   },
-  mounted() {
-    fetch('/api/tradfri/devices').then(res => res.json()).then((res) => {
-      this.items = res.items;
-    });
+  async mounted() {
+    this.items = (await TradfriService.getDevices()).items;
   },
 };
 </script>
