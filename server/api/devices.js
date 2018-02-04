@@ -40,5 +40,18 @@ module.exports = {
       items,
       status: 'ok'
     });
+  },
+  async control(req, res) {
+    try {
+      const light = devices[+req.params.id];
+      if (light) {
+        const success = await tradfri.operateLight(light, req.body);
+        res.json(marshallDevice(light));
+      } else {
+        res.status(404).send();
+      }
+    } catch (e) {
+      res.json({ status: 'error', error: e });
+    }
   }
 };
