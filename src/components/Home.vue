@@ -13,10 +13,11 @@
                 v-bind:key="device.instanceId">
               <div class="ui toggle checkbox" v-if="device.type === 2">
                 <input
+                  @change="toggleLight(device.instanceId, device.lightList[0].onOff)"
                   :name="device.instanceId"
-                  v-model="device.lightList[0].onOff"
-                  type="checkbox">
-                <label>{{device.name}} ({{device.instanceId}})</label>
+                  type="checkbox"
+                  v-model="device.lightList[0].onOff">
+                <label>{{device.lightList[0].onOff}} {{device.name}} ({{device.instanceId}})</label>
               </div>
               <span v-if="device.type !== 2">
                 {{device.name}} ({{device.instanceId}})
@@ -38,6 +39,13 @@ export default {
     return {
       groups: [],
     };
+  },
+  methods: {
+    toggleLight(id, value) {
+      TradfriService.controlDevice(id, {
+        onOff: value,
+      });
+    },
   },
   async mounted() {
     const devices = (await TradfriService.getDevices()).items;

@@ -1,6 +1,7 @@
 const getJson = path => fetch(path).then(res => res.json());
 const putJson = (path, payload) => fetch(path, {
   method: 'PUT',
+  headers: new Headers({ 'Content-Type': 'application/json; charset=utf-8' }),
   body: JSON.stringify(payload),
 }).then(res => res.json());
 
