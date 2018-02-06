@@ -22,6 +22,10 @@
         <td><span class="ui basic label">
           {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}</span>
           {{device.name}}
+
+          <BrightnessControl v-if="device.type === 2 && device.lightList"
+                             :instanceId="device.instanceId"
+                             :value="device.lightList[0].dimmer" />
         </td>
         <td class="right aligned collapsing">
           {{device.lastSeen*1000 | date('D MMM YYYY')}}
@@ -42,11 +46,13 @@
 </style>
 <script>
 import Battery from './Battery';
+import BrightnessControl from './BrightnessControl';
 import TradfriService from './TradfriService';
 
 export default{
   components: {
     Battery,
+    BrightnessControl,
   },
   methods: {
     toggleLight(id, value) {
