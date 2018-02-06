@@ -26,6 +26,10 @@ tradfri
     devices[device.instanceId] = device;
     //console.log(`Added device ${device.name} (${device.instanceId})`);
   })
+  .on('device removed', (id) => {
+    console.log(`Device removed: ${id})`);
+    delete devices[id];
+  })
   .on('error', e => {
     console.log('device error', e);
   })

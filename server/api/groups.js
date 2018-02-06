@@ -6,6 +6,10 @@ tradfri
     groups[group.instanceId] = group;
     //console.log(`Added group ${group.name} (${group.instanceId})`);
   })
+  .on('group removed', (id) => {
+    console.log(`Group removed: ${id})`);
+    delete groups[id];
+  })
   .on('error', e => {
     console.log('group error', e);
   })
