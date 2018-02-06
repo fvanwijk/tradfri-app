@@ -10,14 +10,9 @@
     <tbody>
       <tr v-for="device in devices" v-bind:key="device.instanceId">
         <td class="collapsing checkbox">
-          <div class="ui fitted toggle checkbox" v-if="device.type === 2">
-            <input
-                @change="toggleLight(device.instanceId, device.lightList[0].onOff)"
-                :name="device.instanceId"
-                type="checkbox"
-                v-model="device.lightList[0].onOff">
-            <label></label>
-          </div>
+          <PowerControl v-if="device.type === 2"
+                        :instanceId="device.instanceId"
+                        :value="device.lightList[0].onOff" />
         </td>
         <td><span class="ui basic label">
           {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}</span>
@@ -47,19 +42,13 @@
 <script>
 import Battery from './Battery';
 import BrightnessControl from './BrightnessControl';
-import TradfriService from './TradfriService';
+import PowerControl from './PowerControl';
 
 export default{
   components: {
     Battery,
     BrightnessControl,
-  },
-  methods: {
-    toggleLight(id, value) {
-      TradfriService.controlDevice(id, {
-        onOff: value,
-      });
-    },
+    PowerControl,
   },
   props: ['devices'],
 };
