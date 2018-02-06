@@ -18,9 +18,12 @@
           {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}</span>
           {{device.name}}
 
-          <BrightnessControl v-if="device.type === 2 && device.lightList"
+          <BrightnessControl v-if="device.type === 2"
                              :instanceId="device.instanceId"
                              :value="device.lightList[0].dimmer" />
+          <ColorControl v-if="device.type === 2"
+                             :instanceId="device.instanceId"
+                             :value="device.lightList[0].color" />
         </td>
         <td class="right aligned collapsing">
           {{device.lastSeen*1000 | date('D MMM YYYY')}}
@@ -42,12 +45,14 @@
 <script>
 import Battery from './Battery';
 import BrightnessControl from './BrightnessControl';
+import ColorControl from './ColorControl';
 import PowerControl from './PowerControl';
 
 export default{
   components: {
     Battery,
     BrightnessControl,
+    ColorControl,
     PowerControl,
   },
   props: ['devices'],
