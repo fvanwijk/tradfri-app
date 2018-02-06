@@ -21,5 +21,18 @@ module.exports = {
       items: Object.values(groups).map(({ client, ...group }) => group),
       status: 'ok'
     });
-  }
+  },
+  async control(req, res) {
+    try {
+      const group = groups[+req.params.id];
+      if (group) {
+        const success = await tradfri.operateGroup(group, req.body);
+        res.json(marshallDevice(group));
+      } else {
+        res.status(404).send();
+      }
+    } catch (e) {
+      res.json({ status: 'error', error: e });
+    }
+  },
 };

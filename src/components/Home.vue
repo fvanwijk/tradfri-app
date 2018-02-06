@@ -3,7 +3,7 @@
     <h1>Trådfri App</h1>
 
     <div v-for="group in groups" v-bind:key="group.instanceId" class="group">
-      <h2 class="ui header">{{group.name}}</h2>
+      <h2 class="ui header">{{group.name}} <span class="sub header">{{group.instanceId}}</span></h2>
       <Devices :devices="group.devices"></Devices>
     </div>
   </div>

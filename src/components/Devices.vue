@@ -53,12 +53,6 @@
     border-top: none;
     border-bottom: 1px solid rgba(34, 36, 38, 0.1);
   }
-
-
-
-
-
-
 </style>
 <script>
 import Battery from './Battery';
@@ -75,9 +69,4 @@ export default{
   },
   props: ['devices'],
 };
-
-
-
-
-
 </script>

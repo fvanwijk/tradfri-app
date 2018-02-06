@@ -57,5 +57,5 @@ module.exports = {
     } catch (e) {
       res.json({ status: 'error', error: e });
     }
-  }
+  },
 };
