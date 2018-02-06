@@ -2,25 +2,21 @@
   <div>
     <h1>Trådfri App</h1>
 
-    <div class="ui items">
-      <div class="item" v-for="group in groups" v-bind:key="group.instanceId">
-        <div class="content">
-          <div class="header">{{group.name}}</div>
-          <DeviceTable :devices="group.devices"></DeviceTable>
-        </div>
-      </div>
+    <div v-for="group in groups" v-bind:key="group.instanceId" class="group">
+      <h2 class="ui header">{{group.name}}</h2>
+      <Devices :devices="group.devices"></Devices>
     </div>
   </div>
 </template>
 
 <script>
-import DeviceTable from './DeviceTable';
+import Devices from './Devices';
 import TradfriService from './TradfriService';
 
 export default {
   name: 'Home',
   components: {
-    DeviceTable,
+    Devices,
   },
   data() {
     return {
@@ -37,8 +33,12 @@ export default {
     }));
   },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .group {
+    margin-bottom: 2em;
+  }
 </style>
