@@ -31,11 +31,12 @@
                             :value="device.lightList[0].color"/>
             </div>
           </div>
-          <div class="extra">
-            <div class="ui basic label">
+          <small class="extra">
+            <span class="ui basic label">
               {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}
-            </div>
-          </div>
+            </span>
+            <span>{{device.deviceInfo.modelNumber}} v{{device.deviceInfo.firmwareVersion}}</span>
+          </small>
         </div>
       </div>
     </div>
