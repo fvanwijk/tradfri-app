@@ -23,8 +23,8 @@ function marshallDevice({ client, ...device }) {
 
 tradfri
   .on('device updated', (device) => {
+    console.log(`Device update: ${device.name} (${device.instanceId})`);
     devices[device.instanceId] = device;
-    //console.log(`Added device ${device.name} (${device.instanceId})`);
   })
   .on('device removed', (id) => {
     console.log(`Device removed: ${id})`);

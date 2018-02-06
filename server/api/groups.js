@@ -3,8 +3,8 @@ const groups = {};
 
 tradfri
   .on('group updated', async group => {
+    console.log(`Group update: ${group.name} (${group.instanceId})`);
     groups[group.instanceId] = group;
-    //console.log(`Added group ${group.name} (${group.instanceId})`);
   })
   .on('group removed', (id) => {
     console.log(`Group removed: ${id})`);
