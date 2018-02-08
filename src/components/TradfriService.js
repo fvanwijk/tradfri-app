@@ -15,4 +15,7 @@ export default {
   getGroups() {
     return getJson('/api/tradfri/group');
   },
+  controlGroup(id, settings) {
+    return putJson(`/api/tradfri/group/${id}`, settings);
+  },
 };

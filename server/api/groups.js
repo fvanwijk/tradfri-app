@@ -27,7 +27,7 @@ module.exports = {
       const group = groups[+req.params.id];
       if (group) {
         const success = await tradfri.operateGroup(group, req.body);
-        res.json(marshallDevice(group));
+        res.json((({ client, ...rest }) => rest)(group));
       } else {
         res.status(404).send();
       }

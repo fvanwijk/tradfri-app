@@ -5,9 +5,7 @@
         <div class="content">
         <span class="ui header">
           {{device.name}}
-          <PowerControl v-if="device.type === 2"
-                        :instanceId="device.instanceId"
-                        :value="device.lightList[0].onOff"/>
+          <PowerControl v-if="device.type === 2" :item="device"/>
         </span>
 
           <div class="meta">
