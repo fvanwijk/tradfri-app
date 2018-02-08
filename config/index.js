@@ -2,7 +2,8 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
+const path = require('path');
+const { port } = require('../server/config.json');
 
 module.exports = {
   dev: {
@@ -12,7 +13,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: `http://localhost:${port}`,
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
