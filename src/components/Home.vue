@@ -7,7 +7,10 @@
         {{group.name}}
         <PowerControl :item="group"/>
         <div class="sub header">
-          <div class="ui basic fitted label"><i class="fitted group object icon"></i>{{group.instanceId}}</div>
+          <div class="ui basic fitted label">
+            <i class="fitted group object icon"></i>{{group.instanceId}}
+          </div>
+          <BrightnessControl :item="group" />
         </div>
       </h2>
       <Devices :devices="group.devices"></Devices>
@@ -16,6 +19,7 @@
 </template>
 
 <script>
+import BrightnessControl from './BrightnessControl';
 import Devices from './Devices';
 import PowerControl from './PowerControl';
 import TradfriService from './TradfriService';
@@ -23,6 +27,7 @@ import TradfriService from './TradfriService';
 export default {
   name: 'Home',
   components: {
+    BrightnessControl,
     Devices,
     PowerControl,
   },
@@ -52,7 +57,7 @@ export default {
   .ui.header .fitted.label {
     margin-left: 0;
   }
-  .ui,header .fitted.label i {
+  .ui.header .fitted.label i {
     margin-right: 0.3rem;
   }
 </style>

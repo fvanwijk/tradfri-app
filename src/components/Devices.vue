@@ -21,9 +21,7 @@
           </div>
           <div class="description" v-if="device.type === 2">
             <div class="ui basic padded segment">
-              <BrightnessControl v-if="device.type === 2"
-                                 :instanceId="device.instanceId"
-                                 :value="device.lightList[0].dimmer"/>
+              <BrightnessControl v-if="device.type === 2" :item="device" />
               <ColorControl v-if="device.type === 2 && device.lightList[0]._spectrum === 'rgb'"
                             :instanceId="device.instanceId"
                             :value="device.lightList[0].color"/>

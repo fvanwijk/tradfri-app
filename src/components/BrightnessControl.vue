@@ -14,16 +14,16 @@ import TradfriService from './TradfriService';
 export default {
   data() {
     return {
-      dimmer: this.value,
+      dimmer: this.item.deviceInfo ? this.item.lightList[0].dimmer : this.item.dimmer,
     };
   },
   methods: {
     setBrightness(value) {
-      TradfriService.controlDevice(this.instanceId, {
+      TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
         dimmer: +value,
       });
     },
   },
-  props: ['instanceId', 'value'],
+  props: ['item'],
 };
 </script>
