@@ -6,7 +6,9 @@
       <h2 class="ui header">
         {{group.name}}
         <PowerControl :item="group"/>
-        <span class="sub header">{{group.instanceId}}</span>
+        <div class="sub header">
+          <div class="ui basic fitted label"><i class="fitted group object icon"></i>{{group.instanceId}}</div>
+        </div>
       </h2>
       <Devices :devices="group.devices"></Devices>
     </div>
@@ -46,5 +48,11 @@ export default {
 <style scoped>
   .group {
     margin-bottom: 2em;
+  }
+  .ui.header .fitted.label {
+    margin-left: 0;
+  }
+  .ui,header .fitted.label i {
+    margin-right: 0.3rem;
   }
 </style>
