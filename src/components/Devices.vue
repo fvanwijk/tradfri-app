@@ -12,13 +12,6 @@
             <i class="clock icon"></i> {{device.lastSeen*1000 | date('D MMM YYYY HH:mm')}}
           </div>
 
-          <div class="description" v-if="device.type === 0 || device.type === 4">
-            <div class="ui basic padded segment">
-              <Battery v-if="device.deviceInfo.power === 3"
-                       :value="device.deviceInfo.battery">
-              </Battery>
-            </div>
-          </div>
           <div class="description" v-if="device.type === 2">
             <div class="ui basic padded segment">
               <BrightnessControl v-if="device.type === 2" :item="device" />
@@ -31,7 +24,11 @@
             <span class="ui basic label">
               {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}
             </span>
-            <span>{{device.deviceInfo.modelNumber}} v{{device.deviceInfo.firmwareVersion}}</span>
+            <span>
+              <Battery v-if="device.deviceInfo.power === 3"
+                           :value="device.deviceInfo.battery">
+              </Battery>
+              {{device.deviceInfo.modelNumber}} v{{device.deviceInfo.firmwareVersion}}</span>
           </small>
         </div>
       </div>
