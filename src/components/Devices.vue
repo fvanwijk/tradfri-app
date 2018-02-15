@@ -9,7 +9,7 @@
         </span>
 
           <div class="meta">
-            <i class="clock icon"></i> {{device.lastSeen*1000 | date('D MMM YYYY HH:mm')}}
+            <Timestamp :timestamp="device.lastSeen" />
           </div>
 
           <div class="description" v-if="device.type === 2">
@@ -21,14 +21,11 @@
             </div>
           </div>
           <small class="extra">
-            <span class="ui basic label">
-              {{['🕹', '💡', '💡', '', '👋'][device.type]}} {{device.instanceId}}
-            </span>
+            <Label :device="device" />
             <span>
-              <Battery v-if="device.deviceInfo.power === 3"
-                           :value="device.deviceInfo.battery">
-              </Battery>
-              {{device.deviceInfo.modelNumber}} v{{device.deviceInfo.firmwareVersion}}</span>
+              <Battery v-if="device.deviceInfo.power === 3" :value="device.deviceInfo.battery" />
+              <DeviceModel :deviceInfo="device.deviceInfo" />
+            </span>
           </small>
         </div>
       </div>
@@ -51,14 +48,20 @@
 import Battery from './Battery';
 import BrightnessControl from './BrightnessControl';
 import ColorControl from './ColorControl';
+import DeviceModel from './DeviceModel';
+import Label from './Label';
 import PowerControl from './PowerControl';
+import Timestamp from './Timestamp';
 
 export default{
   components: {
     Battery,
     BrightnessControl,
     ColorControl,
+    DeviceModel,
+    Label,
     PowerControl,
+    Timestamp,
   },
   props: ['devices'],
 };

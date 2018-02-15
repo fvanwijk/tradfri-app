@@ -7,9 +7,7 @@
         {{group.name}}
         <PowerControl :item="group"/>
         <div class="sub header">
-          <div class="ui basic fitted label">
-            <i class="fitted group object icon"></i>{{group.instanceId}}
-          </div>
+          <Label :device="group" />
           <BrightnessControl :item="group" />
         </div>
       </h2>
@@ -21,6 +19,7 @@
 <script>
 import BrightnessControl from './BrightnessControl';
 import Devices from './Devices';
+import Label from './Label';
 import PowerControl from './PowerControl';
 import TradfriService from './TradfriService';
 
@@ -29,6 +28,7 @@ export default {
   components: {
     BrightnessControl,
     Devices,
+    Label,
     PowerControl,
   },
   data() {
@@ -53,11 +53,5 @@ export default {
 <style scoped>
   .group {
     margin-bottom: 2em;
-  }
-  .ui.header .fitted.label {
-    margin-left: 0;
-  }
-  .ui.header .fitted.label i {
-    margin-right: 0.3rem;
   }
 </style>
