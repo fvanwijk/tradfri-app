@@ -4,7 +4,9 @@
       <div class="item" v-for="device in devices" v-bind:key="device.instanceId">
         <div class="content">
         <span class="ui header">
-          {{device.name}}
+          <span contenteditable @blur="updateDeviceName(device, $event.target.innerText)">
+            {{device.name}}
+          </span>
           <PowerControl v-if="device.type === 2" :item="device"/>
         </span>
 
@@ -43,6 +45,15 @@
     border-top: none;
     border-bottom: 1px solid rgba(34, 36, 38, 0.1);
   }
+
+  [contenteditable] {
+    cursor: context-menu;
+  }
+  [contenteditable]:hover,
+  [contenteditable]:focus {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.6);
+  }
 </style>
 <script>
 import Battery from './Battery';
@@ -52,6 +63,7 @@ import DeviceModel from './DeviceModel';
 import Label from './Label';
 import PowerControl from './PowerControl';
 import Timestamp from './Timestamp';
+import TradfriService from './TradfriService';
 
 export default{
   components: {
@@ -62,6 +74,11 @@ export default{
     Label,
     PowerControl,
     Timestamp,
+  },
+  methods: {
+    updateDeviceName(device, name) {
+      TradfriService.updateDevice(device.instanceId, { name: name.trim() });
+    },
   },
   props: ['devices'],
 };

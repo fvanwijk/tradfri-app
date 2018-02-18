@@ -4,13 +4,14 @@
 
     <div v-for="group in groups" v-bind:key="group.instanceId" class="group">
       <h2 class="ui header">
-        {{group.name}}
+        <span contenteditable
+              @blur="updateGroupName(group, $event.target.innerText)">{{group.name}}</span>
         <PowerControl :item="group"/>
-        <div class="sub header">
-          <Label :device="group" />
-          <BrightnessControl :item="group" />
-        </div>
       </h2>
+
+      <Label :device="group" />
+      <BrightnessControl :item="group" />
+
       <Devices :devices="group.devices"></Devices>
     </div>
   </div>
@@ -36,6 +37,11 @@ export default {
       groups: [],
     };
   },
+  methods: {
+    updateGroupName(group, name) {
+      TradfriService.updateGroup(group.instanceId, { name: name.trim() });
+    },
+  },
   async mounted() {
     const devices = (await TradfriService.getDevices()).items;
 
@@ -53,5 +59,13 @@ export default {
 <style scoped>
   .group {
     margin-bottom: 2em;
+  }
+  [contenteditable] {
+    cursor: context-menu;
+  }
+  [contenteditable]:hover,
+  [contenteditable]:focus {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.6);
   }
 </style>
