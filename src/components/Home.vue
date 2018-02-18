@@ -2,7 +2,7 @@
   <div>
     <h1>Trådfri App</h1>
 
-    <div v-for="group in groups" v-bind:key="group.instanceId" class="group">
+    <div v-for="group in groupedDevices" v-bind:key="group.instanceId" class="group">
       <h2 class="ui header">
         <span contenteditable
               @blur="updateGroupName(group, $event.target.innerText)">{{group.name}}</span>
@@ -33,8 +33,18 @@ export default {
     Label,
     PowerControl,
   },
+  computed: {
+    groupedDevices() {
+      return this.groups.map(group => ({
+        ...group,
+        devices: group.deviceIDs.map(deviceID =>
+          this.devices.find(device => deviceID === device.instanceId)),
+      }));
+    }
+  },
   data() {
     return {
+      devices: [],
       groups: [],
     };
   },
@@ -44,13 +54,8 @@ export default {
     },
   },
   async mounted() {
-    const devices = (await TradfriService.getDevices()).items;
-
-    this.groups = (await TradfriService.getGroups()).items.map(group => ({
-      ...group,
-      devices: group.deviceIDs.map(deviceID =>
-        devices.find(device => deviceID === device.instanceId)),
-    }));
+    this.devices = (await TradfriService.getDevices()).items;
+    this.groups = (await TradfriService.getGroups()).items;
 
     const sockjs = new SockJS('http://localhost:8081/updates');
     sockjs.onopen = () => console.log('[*] open', sockjs.protocol);
