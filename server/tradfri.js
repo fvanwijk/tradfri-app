@@ -7,7 +7,7 @@ const tradfri = new TradfriClient(hostname, {
       case 'silly':
         break;
       case 'debug':
-        //console.log('\x1b[34m%s\x1b[0m', 'DEBUG -', msg);
+        console.log('\x1b[2m%s\x1b[0m', '[DEBUG]', msg);
         break;
       case 'info':
         console.info('\x1b[34m%s\x1b[0m', '[INFO]', msg);

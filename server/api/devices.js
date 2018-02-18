@@ -30,8 +30,8 @@ tradfri
     console.log(`Device removed: ${id})`);
     delete devices[id];
   })
-  .on('error', e => {
-    console.log('device error', e);
+  .on('error', ({ message }) => {
+    console.log('device error', message);
   })
   .observeDevices();
 
@@ -54,8 +54,8 @@ module.exports = {
       } else {
         res.status(404).send();
       }
-    } catch (e) {
-      res.json({ status: 'error', error: e });
+    } catch ({ message }) {
+      res.json({ status: 'error', error: message });
     }
   },
 };

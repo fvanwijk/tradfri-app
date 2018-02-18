@@ -10,8 +10,8 @@ tradfri
     console.log(`Group removed: ${id})`);
     delete groups[id];
   })
-  .on('error', e => {
-    console.log('group error', e);
+  .on('error', ({ message }) => {
+    console.log('group error', message);
   })
   .observeGroupsAndScenes();
 
@@ -31,8 +31,8 @@ module.exports = {
       } else {
         res.status(404).send();
       }
-    } catch (e) {
-      res.json({ status: 'error', error: e });
+    } catch ({ message }) {
+      res.json({ status: 'error', error: message });
     }
   },
 };
