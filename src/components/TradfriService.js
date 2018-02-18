@@ -12,10 +12,16 @@ export default {
   controlDevice(id, settings) {
     return putJson(`/api/tradfri/device/control/${id}`, settings);
   },
+  updateDevice(id, device) {
+    return putJson(`/api/tradfri/device/${id}`, device);
+  },
   getGroups() {
     return getJson('/api/tradfri/group');
   },
   controlGroup(id, settings) {
     return putJson(`/api/tradfri/group/control/${id}`, settings);
+  },
+  updateGroup(id, group) {
+    return putJson(`/api/tradfri/group/${id}`, group);
   },
 };

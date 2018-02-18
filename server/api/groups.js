@@ -35,4 +35,18 @@ module.exports = {
       res.json({ status: 'error', error: message });
     }
   },
+  async update(req, res) {
+    try {
+      const group = groups[+req.params.id];
+      if (group) {
+        const newGroup = group.clone().merge(req.body);
+        const success = await tradfri.updateGroup(newGroup);
+        res.json((({ client, ...rest }) => rest)(newGroup));
+      } else {
+        res.status(404).send();
+      }
+    } catch ({ message }) {
+      res.json({ status: 'error', error: message });
+    }
+  },
 };

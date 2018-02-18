@@ -58,4 +58,18 @@ module.exports = {
       res.json({ status: 'error', error: message });
     }
   },
+  async update(req, res) {
+    try {
+      const light = devices[+req.params.id];
+      if (light) {
+        const newLight = light.clone().merge(req.body);
+        const success = await tradfri.updateDevice(newLight);
+        res.json((({ client, ...rest }) => rest)(newLight));
+      } else {
+        res.status(404).send();
+      }
+    } catch ({ message }) {
+      res.json({ status: 'error', error: message });
+    }
+  },
 };
