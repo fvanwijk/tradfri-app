@@ -21,22 +21,26 @@ function marshallDevice({ client, ...device }) {
   return device;
 }
 
-tradfri
-  .on('device updated', (device) => {
-    console.log(`Device update: ${device.name} (${device.instanceId})`);
-    devices[device.instanceId] = device;
-  })
-  .on('device removed', (id) => {
-    console.log(`Device removed: ${id})`);
-    delete devices[id];
-  })
-  .on('error', ({ message }) => {
-    console.log('device error', message);
-  })
-  .observeDevices();
-
-
 module.exports = {
+  register(sock) {
+    let sockConnection;
+    sock.on('connection', conn => sockConnection = conn);
+
+    tradfri
+      .on('device updated', (device) => {
+        //console.log(`Device update: ${device.name} (${device.instanceId})`);
+        sockConnection && sockConnection.write(`Device update: ${device.name} (${device.instanceId})`);
+        devices[device.instanceId] = device;
+      })
+      .on('device removed', (id) => {
+        // console.log(`Device removed: ${id})`);
+        delete devices[id];
+      })
+      .on('error', ({ message }) => {
+        console.log('device error', message);
+      })
+      .observeDevices();
+  },
   getAll(req, res) {
     const items = Object.values(devices).map(marshallDevice);
 

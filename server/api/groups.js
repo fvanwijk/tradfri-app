@@ -1,21 +1,27 @@
 const tradfri = require('../tradfri');
 const groups = {};
 
-tradfri
-  .on('group updated', async group => {
-    console.log(`Group update: ${group.name} (${group.instanceId})`);
-    groups[group.instanceId] = group;
-  })
-  .on('group removed', (id) => {
-    console.log(`Group removed: ${id})`);
-    delete groups[id];
-  })
-  .on('error', ({ message }) => {
-    console.log('group error', message);
-  })
-  .observeGroupsAndScenes();
 
 module.exports = {
+  register(sock) {
+    let sockConnection;
+    sock.on('connection', conn => sockConnection = conn);
+
+    tradfri
+      .on('group updated', async group => {
+        //console.log(`Group update: ${group.name} (${group.instanceId})`);
+        sockConnection && sockConnection.write(`Group update: ${group.name} (${group.instanceId})`);
+        groups[group.instanceId] = group;
+      })
+      .on('group removed', (id) => {
+        //console.log(`Group removed: ${id})`);
+        delete groups[id];
+      })
+      .on('error', ({ message }) => {
+        console.log('group error', message);
+      })
+      .observeGroupsAndScenes();
+  },
   getAll(req, res) {
     res.json({
       items: Object.values(groups).map(({ client, ...group }) => group),

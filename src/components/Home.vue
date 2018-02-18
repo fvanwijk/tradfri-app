@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import SockJS from 'sockjs-client';
 import BrightnessControl from './BrightnessControl';
 import Devices from './Devices';
 import Label from './Label';
@@ -50,6 +51,11 @@ export default {
       devices: group.deviceIDs.map(deviceID =>
         devices.find(device => deviceID === device.instanceId)),
     }));
+
+    const sockjs = new SockJS('http://localhost:8081/updates');
+    sockjs.onopen = () => console.log('[*] open', sockjs.protocol);
+    sockjs.onmessage = e => console.log('[.] message', e.data);
+    sockjs.onclose = () => console.log('[*] close');
   },
 };
 

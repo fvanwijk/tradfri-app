@@ -1,15 +1,17 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const sockjs  = require('sockjs');
 const config = require('./config.json');
+const init = require('./init');
 
 const app = express();
 app.use(bodyParser.json());
-
-const routes = require('./api/routes.js');
-routes(app);
+const sock = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
+init(app, sock);
 
 const port = process.env.PORT || config.port || 3000;
-app.listen(port);
+const server = app.listen(port);
+sock.installHandlers(server, { prefix: '/updates' });
 
 console.log(`Trådfri service running on port ${port}`);
 
