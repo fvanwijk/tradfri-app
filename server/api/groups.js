@@ -1,6 +1,7 @@
 const tradfri = require('../tradfri');
 const groups = {};
 
+const marshallGroup = (({ client, ...rest }) => rest);
 
 module.exports = {
   register(sock) {
@@ -22,6 +23,14 @@ module.exports = {
       })
       .observeGroupsAndScenes();
   },
+  get(req, res) {
+    const group = groups[+req.params.id];
+    if (group) {
+      res.json(marshallGroup(group));
+    } else {
+      res.status(404).send();
+    }
+  },
   getAll(req, res) {
     res.json({
       items: Object.values(groups).map(({ client, ...group }) => group),
@@ -33,7 +42,7 @@ module.exports = {
       const group = groups[+req.params.id];
       if (group) {
         const success = await tradfri.operateGroup(group, req.body);
-        res.json((({ client, ...rest }) => rest)(group));
+        res.json(marshallGroup(group));
       } else {
         res.status(404).send();
       }
@@ -47,7 +56,7 @@ module.exports = {
       if (group) {
         const newGroup = group.clone().merge(req.body);
         const success = await tradfri.updateGroup(newGroup);
-        res.json((({ client, ...rest }) => rest)(newGroup));
+        res.json(marshallGroup(newGroup));
       } else {
         res.status(404).send();
       }

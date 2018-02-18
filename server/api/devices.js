@@ -41,6 +41,14 @@ module.exports = {
       })
       .observeDevices();
   },
+  get(req, res) {
+    const light = devices[+req.params.id];
+    if (light) {
+      res.json(marshallDevice(light));
+    } else {
+      res.status(404).send();
+    }
+  },
   getAll(req, res) {
     const items = Object.values(devices).map(marshallDevice);
 

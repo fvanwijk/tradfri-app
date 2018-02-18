@@ -9,6 +9,9 @@ export default {
   getDevices() {
     return getJson('/api/tradfri/device');
   },
+  getDevice(id) {
+    return getJson(`/api/tradfri/device/${id}`);
+  },
   controlDevice(id, settings) {
     return putJson(`/api/tradfri/device/control/${id}`, settings);
   },
@@ -17,6 +20,9 @@ export default {
   },
   getGroups() {
     return getJson('/api/tradfri/group');
+  },
+  getGroup(id) {
+    return getJson(`/api/tradfri/group/${id}`);
   },
   controlGroup(id, settings) {
     return putJson(`/api/tradfri/group/control/${id}`, settings);
