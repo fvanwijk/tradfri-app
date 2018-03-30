@@ -19,10 +19,17 @@ When everything is set up, run a server that connects with your gateway:
 
 The server has some REST endpoints:
 
-* `GET /tradfri/devices` Get all devices
-* `GET /tradfri/groups` Get all devices
+* `GET /tradfri/device` Get all devices
+* `GET /tradfri/device/1` Get device with id 1
+* `PUT /tradfri/device/1` Update device with id 1
+* `PUT /tradfri/device/control/1` Control device with id 1
 
-Websockets will be implemented later. 
+* `GET /tradfri/group` Get all groups
+* `GET /tradfri/group/1` Get group with id 1
+* `PUT /tradfri/group/1` Update group with id 1 
+* `PUT /tradfri/group/control/1` Update group with id 1
+
+The WebSocket channel is on `/updates`. 
 
 ### Front-end
 
