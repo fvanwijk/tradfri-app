@@ -16,10 +16,10 @@
 
           <div class="description" v-if="device.type === 2">
             <div class="ui basic padded segment">
-              <BrightnessControl v-if="device.type === 2" :item="device" />
-              <ColorControl v-if="device.type === 2 && device.lightList[0]._spectrum === 'rgb'"
+              <ColorControl v-if="device.type === 2 && isColorDevice(device)"
                             :instanceId="device.instanceId"
-                            :value="device.lightList[0].color"/>
+                            :light="device.lightList[0]" />
+              <BrightnessControl v-if="device.type === 2" :item="device" />
             </div>
           </div>
           <small class="extra">
@@ -76,6 +76,7 @@ export default{
     Timestamp,
   },
   methods: {
+    isColorDevice: TradfriService.isColorDevice,
     updateDeviceName(device, name) {
       TradfriService.updateDevice(device.instanceId, { name: name.trim() });
     },

@@ -1,31 +1,31 @@
 <template>
   <div class="ui fitted toggle checkbox">
     <input
-      @change="toggle(onOff)"
+      @change="toggle($event.target.checked)"
       :name="item.instanceId"
       type="checkbox"
-      v-model="onOff">
+      :checked="onOff">
     <label></label>
   </div>
 </template>
 <style>
 </style>
 <script>
-import TradfriService from './TradfriService';
+  import TradfriService from './TradfriService';
 
-export default {
-  data() {
-    return {
-      onOff: this.item.deviceInfo ? this.item.lightList[0].onOff : this.item.onOff,
-    };
-  },
-  methods: {
-    toggle(value) {
-      TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
-        onOff: !!value,
-      });
+  export default {
+    computed: {
+      onOff() {
+        return this.item.deviceInfo ? this.item.lightList[0].onOff : this.item.onOff;
+      },
     },
-  },
-  props: ['item'],
-};
+    methods: {
+      toggle(value) {
+        TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
+          onOff: !!value,
+        });
+      },
+    },
+    props: ['item'],
+  };
 </script>

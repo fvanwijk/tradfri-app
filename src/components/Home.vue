@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import SockJS from 'sockjs-client';
 import BrightnessControl from './BrightnessControl';
 import Devices from './Devices';
 import Label from './Label';
 import PowerControl from './PowerControl';
+import SocketConnection from './SocketConnection.js';
 import TradfriService from './TradfriService';
 
 export default {
@@ -57,10 +57,15 @@ export default {
     this.devices = (await TradfriService.getDevices()).items;
     this.groups = (await TradfriService.getGroups()).items;
 
-    const sockjs = new SockJS('http://localhost:8081/updates');
-    sockjs.onopen = () => console.log('[*] open', sockjs.protocol);
-    sockjs.onmessage = e => console.log('[.] message', e.data);
-    sockjs.onclose = () => console.log('[*] close');
+    SocketConnection.registerMessageHandler('device', (id, payload) => {
+      this.devices = this.devices.map(device => id === device.instanceId ? payload : device);
+      console.log('device', id, payload);
+    });
+
+    SocketConnection.registerMessageHandler('group', (id, payload) => {
+      console.log('group', id, payload);
+      this.groups = this.groups.map(group => id === group.instanceId ? payload : group);
+    });
   },
 };
 

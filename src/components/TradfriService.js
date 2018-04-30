@@ -15,6 +15,10 @@ export default {
   controlDevice(id, settings) {
     return putJson(`/api/tradfri/device/control/${id}`, settings);
   },
+  isColorDevice(device) {
+    return device.lightList[0]._spectrum === 'rgb'
+      || ['TRADFRI bulb E27 CWS opal 600lm', 'LCT015'].includes(device.deviceInfo.modelNumber);
+  },
   updateDevice(id, device) {
     return putJson(`/api/tradfri/device/${id}`, device);
   },

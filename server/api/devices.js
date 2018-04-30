@@ -9,10 +9,10 @@ function marshallDevice({ client, ...device }) {
       break;
     case AccessoryTypes.lightbulb:
     case 1:
-      device.lightList = (device.lightList || []).map(({ client, _accessory, ...light}) => light);
+      device.lightList = (device.lightList || []).map(({ client, _accessory, ...light }) => light);
       break;
     case AccessoryTypes.remote:
-      device.switchList = device.switchList.map(({ client, ...remote}) => remote);
+      device.switchList = device.switchList.map(({ client, ...remote }) => remote);
       break;
     default:
       console.log('Not mapped', device);
@@ -28,8 +28,11 @@ module.exports = {
 
     tradfri
       .on('device updated', (device) => {
-        //console.log(`Device update: ${device.name} (${device.instanceId})`);
-        sockConnection && sockConnection.write(`Device update: ${device.name} (${device.instanceId})`);
+        sockConnection && sockConnection.write(JSON.stringify({
+          type: 'device',
+          id: device.instanceId,
+          payload: marshallDevice(device)
+        }));
         devices[device.instanceId] = device;
       })
       .on('device removed', (id) => {

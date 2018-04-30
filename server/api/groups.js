@@ -9,9 +9,12 @@ module.exports = {
     sock.on('connection', conn => sockConnection = conn);
 
     tradfri
-      .on('group updated', async group => {
-        //console.log(`Group update: ${group.name} (${group.instanceId})`);
-        sockConnection && sockConnection.write(`Group update: ${group.name} (${group.instanceId})`);
+      .on('group updated', async ({ client, ...group }) => {
+        sockConnection && sockConnection.write(JSON.stringify({
+          type: 'group',
+          id: group.instanceId,
+          payload: group
+        }));
         groups[group.instanceId] = group;
       })
       .on('group removed', (id) => {
