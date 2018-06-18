@@ -34,4 +34,7 @@ export default {
   updateGroup(id, group) {
     return putJson(`/api/tradfri/group/${id}`, group);
   },
+  getMoods() {
+    return getJson('/api/tradfri/mood');
+  },
 };

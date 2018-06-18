@@ -9,4 +9,5 @@ module.exports = function (app) {
   app.route('/tradfri/group/:id').get(controllers.groups.get);
   app.route('/tradfri/group/control/:id').put(controllers.groups.control);
   app.route('/tradfri/group/:id').put(controllers.groups.update);
+  app.route('/tradfri/mood').get(controllers.moods.getAll);
 };

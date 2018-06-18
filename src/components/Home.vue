@@ -39,6 +39,8 @@ export default {
         ...group,
         devices: group.deviceIDs.map(deviceID =>
           this.devices.find(device => deviceID === device.instanceId)),
+        moods: group.moodIDs.map(moodID =>
+          this.moods.find(mood => moodID  === mood.instanceId)),
       }));
     }
   },
@@ -46,6 +48,7 @@ export default {
     return {
       devices: [],
       groups: [],
+      moods: [],
     };
   },
   methods: {
@@ -56,6 +59,7 @@ export default {
   async mounted() {
     this.devices = (await TradfriService.getDevices()).items;
     this.groups = (await TradfriService.getGroups()).items;
+    this.moods = (await TradfriService.getMoods()).items;
 
     SocketConnection.registerMessageHandler('device', (id, payload) => {
       this.devices = this.devices.map(device => id === device.instanceId ? payload : device);
