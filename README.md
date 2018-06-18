@@ -1,11 +1,15 @@
 # Trådfri App
 
-Progressive web app to manage and control IKEA Trådfri lights using your browser or smartphone.
+Web app to manage and control IKEA Trådfri lights using your browser or smartphone.
 
 The IKEA app that you can download from the App/Play store has some basic functionality.
 I want to do custom fancy stuff, so I decided to create a web app to do some experimentation.
 
 Based on the [node-tradfri-client](AlCalzone/node-tradfri-client) from AlCalzone.
+
+## Screenshot
+
+![Screenshot of Trådfri web app](screenshot.png)
 
 ## Build Setup
 
@@ -28,6 +32,8 @@ The server has some REST endpoints:
 * `GET /tradfri/group/1` Get group with id 1
 * `PUT /tradfri/group/1` Update group with id 1 
 * `PUT /tradfri/group/control/1` Update group with id 1
+
+* `GET /tradfri/mood` Get all moods (scenes)
 
 The WebSocket channel is on `/updates`. 
 
