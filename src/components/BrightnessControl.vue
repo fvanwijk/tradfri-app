@@ -9,21 +9,21 @@
 <style>
 </style>
 <script>
-  import TradfriService from './TradfriService';
+import TradfriService from './TradfriService';
 
-  export default {
-    computed: {
-      dimmer() {
-        return this.item.deviceInfo ? this.item.lightList[0].dimmer : this.item.dimmer;
-      }
+export default {
+  computed: {
+    dimmer() {
+      return this.item.deviceInfo ? this.item.lightList[0].dimmer : this.item.dimmer;
     },
-    methods: {
-      setBrightness(value) {
-        TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
-          dimmer: +value,
-        });
-      },
+  },
+  methods: {
+    setBrightness(value) {
+      TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
+        dimmer: +value,
+      });
     },
-    props: ['item'],
-  };
+  },
+  props: ['item'],
+};
 </script>

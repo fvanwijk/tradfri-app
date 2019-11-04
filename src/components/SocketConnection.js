@@ -10,9 +10,9 @@ const messageHandlers = {
   group: [],
 };
 
-sockjs.onmessage = e => {
+sockjs.onmessage = (e) => {
   const { id, type, payload } = JSON.parse(e.data);
-  messageHandlers[type].forEach(handler => {
+  messageHandlers[type].forEach((handler) => {
     handler(id, payload);
   });
 };

@@ -11,21 +11,21 @@
 <style>
 </style>
 <script>
-  import TradfriService from './TradfriService';
+import TradfriService from './TradfriService';
 
-  export default {
-    computed: {
-      onOff() {
-        return this.item.deviceInfo ? this.item.lightList[0].onOff : this.item.onOff;
-      },
+export default {
+  computed: {
+    onOff() {
+      return this.item.deviceInfo ? this.item.lightList[0].onOff : this.item.onOff;
     },
-    methods: {
-      toggle(value) {
-        TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
-          onOff: !!value,
-        });
-      },
+  },
+  methods: {
+    toggle(value) {
+      TradfriService[this.item.deviceInfo ? 'controlDevice' : 'controlGroup'](this.item.instanceId, {
+        onOff: !!value,
+      });
     },
-    props: ['item'],
-  };
+  },
+  props: ['item'],
+};
 </script>

@@ -40,9 +40,9 @@ export default {
         devices: group.deviceIDs.map(deviceID =>
           this.devices.find(device => deviceID === device.instanceId)),
         moods: group.moodIDs.map(moodID =>
-          this.moods.find(mood => moodID  === mood.instanceId)),
+          this.moods.find(mood => moodID === mood.instanceId)),
       }));
-    }
+    },
   },
   data() {
     return {
@@ -62,13 +62,13 @@ export default {
     this.moods = (await TradfriService.getMoods()).items;
 
     SocketConnection.registerMessageHandler('device', (id, payload) => {
-      this.devices = this.devices.map(device => id === device.instanceId ? payload : device);
+      this.devices = this.devices.map(device => (id === device.instanceId ? payload : device));
       console.log('device', id, payload);
     });
 
     SocketConnection.registerMessageHandler('group', (id, payload) => {
       console.log('group', id, payload);
-      this.groups = this.groups.map(group => id === group.instanceId ? payload : group);
+      this.groups = this.groups.map(group => (id === group.instanceId ? payload : group));
     });
   },
 };
